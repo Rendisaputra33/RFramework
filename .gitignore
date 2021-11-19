@@ -1,0 +1,5 @@
+# CakePHP 3
+
+/vendor/*
+/public/node_modules
+/.env

@@ -1,0 +1,30 @@
+{
+	"name": "rendi/rframework",
+	"require": {
+		"php": ">=8",
+		"vlucas/phpdotenv": "^5.4",
+		"firebase/php-jwt": "^5.5"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Rendi\\Rframework\\": "app"
+		},
+		"files": [
+			"app/Helpers/index.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Rendi\\Rframework\\": "tests"
+		}
+	},
+	"authors": [
+		{
+			"name": "Rendisaputra33",
+			"email": "gorengmbah@gmail.com"
+		}
+	]
+}
