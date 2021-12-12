@@ -1,6 +1,6 @@
 <?php
 
-namespace Rendi\Rframework\App\Domain;
+namespace Rendi\Rframework\Domains;
 
 class SessionDomain
 {

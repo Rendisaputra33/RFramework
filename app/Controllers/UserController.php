@@ -3,10 +3,10 @@
 namespace Rendi\Rframework\Controllers;
 
 use Rendi\Rframework\App\Core\Http\Request;
-use Rendi\Rframework\App\Exception\ValidationException;
-use Rendi\Rframework\App\Models\UserLoginRequest;
-use Rendi\Rframework\App\Models\UserRegisterRequest;
-use Rendi\Rframework\App\Service\UserService;
+use Rendi\Rframework\Exceptions\ValidateException;
+use Rendi\Rframework\Models\UserLoginRequest;
+use Rendi\Rframework\Models\UserRegisterRequest;
+use Rendi\Rframework\Services\UserService;
 
 class UserController
 {
@@ -34,7 +34,7 @@ class UserController
             $reqdata = new UserRegisterRequest($request->username, $request->password, $request->confirm);
             $register = $this->userService->register($reqdata);
             var_dump($register);
-        } catch (ValidationException $exception) {
+        } catch (ValidateException $exception) {
             var_dump($exception);
         }
     }
@@ -45,7 +45,7 @@ class UserController
             $reqdata = new UserLoginRequest($request->username, $request->password);
             $user = $this->userService->login($reqdata);
             var_dump($user);
-        } catch (ValidationException $exception) {
+        } catch (ValidateException $exception) {
             var_dump($exception);
         }
     }

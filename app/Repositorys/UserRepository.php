@@ -1,10 +1,10 @@
 <?php
 
-namespace Rendi\Rframework\App\Repository;
+namespace Rendi\Rframework\Repositorys;
 
 use Rendi\Rframework\App\Core\Database\Query;
-use Rendi\Rframework\App\Domain\UserDomain;
-use Rendi\Rframework\App\Models\UserRegisterRequest;
+use Rendi\Rframework\Domains\UserDomain;
+use Rendi\Rframework\Models\UserRegisterRequest;
 
 class UserRepository extends Query
 {
@@ -26,7 +26,7 @@ class UserRepository extends Query
     public function save(UserRegisterRequest $request): bool
     {
         try {
-            $query = $this->query("INSERT INTO user (id, username, password) VALUES ('', :nama, :pw)");
+            $query = $this->query("INSERT INTO user (username, password) VALUES (:nama, :pw)");
             $query->bind(':nama', $request->username)->bind(':pw', $request->password)->execQuery();
             return true;
         } catch (\PDOException $exc) {

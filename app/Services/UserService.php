@@ -1,12 +1,12 @@
 <?php
 
-namespace Rendi\Rframework\App\Service;
+namespace Rendi\Rframework\Services;
 
 use Rendi\Rframework\App\Core\Database\Database;
-use Rendi\Rframework\App\Exception\ValidationException;
-use Rendi\Rframework\App\Models\UserLoginRequest;
-use Rendi\Rframework\App\Models\UserRegisterRequest;
-use Rendi\Rframework\App\Repository\UserRepository;
+use Rendi\Rframework\Exceptions\ValidateException;
+use Rendi\Rframework\Models\UserLoginRequest;
+use Rendi\Rframework\Models\UserRegisterRequest;
+use Rendi\Rframework\Repositorys\UserRepository;
 
 class UserService
 {
@@ -23,10 +23,10 @@ class UserService
             // fetch user by username
             $user = $this->repository->findByUsername($loginRequest->username);
             // when user not found
-            if (!$user) throw new ValidationException('user not found');
+            if (!$user) throw new ValidateException('user not found');
             // when password valid return user
             if (password_verify($loginRequest->password, $user->password)) return $user;
-            throw new ValidationException('username or password wrong!');
+            throw new ValidateException('username or password wrong!');
         } catch (\Exception $e) {
             var_dump($e);
             die();
@@ -38,11 +38,12 @@ class UserService
         try {
             Database::beginTransaction();
             $user = $this->repository->save($registerRequest);
-            return $user;
             Database::commitTransaction();
+            return $user;
         } catch (\Exception $e) {
             Database::rollbackTransaction();
             var_dump($e->getMessage());
+            return false;
         }
     }
 }

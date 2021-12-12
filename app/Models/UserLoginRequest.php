@@ -1,6 +1,6 @@
 <?php
 
-namespace Rendi\Rframework\App\Models;
+namespace Rendi\Rframework\Models;
 
 class UserLoginRequest
 {
