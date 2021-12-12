@@ -15,8 +15,8 @@ class UserDomain
     {
         $this->username = $data->username;
         $this->id_user = $data->id;
-        $this->password = $data->password;
-        $this->updatedAt = $data->updated_at;
+        $this->password = strlen($data->password) < 30 ? password_hash($data->password, PASSWORD_BCRYPT) : $data->password;
+        $this->createdAt = $data->created_at;
         $this->updatedAt = $data->updated_at;
     }
 }

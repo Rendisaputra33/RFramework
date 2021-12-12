@@ -7,20 +7,15 @@ $commands = new Commands();
 
 switch ($argv[1]) {
     case 'controller':
-        # 
         $commands->createController($argv[2], getcwd());
         break;
     case 'view':
-        # 
         $commands->createView($argv[2], getcwd());
         break;
     case 'domain':
-        # 
         $commands->createDomain($argv[2], getcwd());
         break;
     default:
-        # code...
-        echo ('not execute command');
         echo (getcwd());
         break;
 }

@@ -18,12 +18,12 @@ class UserController
         $this->userService = new UserService();
     }
     // 
-    public function register()
+    public function register(): mixed
     {
         return template('Register/index', ['title' => 'Register | Page']);
     }
     // 
-    public function login()
+    public function login(): mixed
     {
         return template('Login/index', ['title' => 'Login | Page']);
     }
@@ -33,9 +33,13 @@ class UserController
         try {
             $reqdata = new UserRegisterRequest($request->username, $request->password, $request->confirm);
             $register = $this->userService->register($reqdata);
-            var_dump($register);
+            if ($register) return redirect('/user/login');
+            return template('Register/index', ['title' => 'Register | Page']);
         } catch (ValidateException $exception) {
-            var_dump($exception);
+            return template('Register/index', [
+                'title' => 'Login | Page',
+                'error' => $exception->getMessage()
+            ]);
         }
     }
 
@@ -43,10 +47,13 @@ class UserController
     {
         try {
             $reqdata = new UserLoginRequest($request->username, $request->password);
-            $user = $this->userService->login($reqdata);
-            var_dump($user);
+            $this->userService->login($reqdata);
+            return redirect('/');
         } catch (ValidateException $exception) {
-            var_dump($exception);
+            return template('Login/index', [
+                'title' => 'Login | Page',
+                'error' => $exception->getMessage()
+            ]);
         }
     }
 }

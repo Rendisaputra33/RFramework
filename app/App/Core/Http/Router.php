@@ -6,24 +6,44 @@ use Rendi\Rframework\App\Core\Http\Request;
 
 class Router extends BaseRouter
 {
+    private static ?string $typemiddleware = null;
+
     public static function  get(string $path, array $control): void
     {
-        self::add('GET', $path, $control);
+        if (self::$typemiddleware) {
+            self::add('GET', self::$typemiddleware . $path, $control);
+        } else {
+            self::add('GET', $path, $control);
+        }
     }
 
     public static function  post(string $path, array $control): void
     {
-        self::add('POST', $path, $control);
+        if (self::$typemiddleware) {
+            self::add('POST', self::$typemiddleware . $path, $control);
+        } else {
+            self::add('POST', $path, $control);
+        }
     }
 
     public static function  put(string $path, array $control): void
     {
-        self::add('PUT', $path, $control);
+        if (self::$typemiddleware) {
+            self::add('PUT', self::$typemiddleware . $path, $control);
+        } else {
+            self::add('PUT', $path, $control);
+        }
     }
 
     public function delete(string $path, array $control): void
     {
         self::add('DELETE', $path, $control);
+    }
+
+    public static function middleware(string $type, \Closure $callback): void
+    {
+        self::$typemiddleware = $type === "api" ? "/api" : null;
+        $callback();
     }
 }
 

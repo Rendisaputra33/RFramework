@@ -26,7 +26,7 @@ class Commands
         # action creating a domain
         touch("$base/app/Domain/" . ucfirst($name) . ".php");
         $buffer = fopen("$base/app/Domain/" . ucfirst($name) . ".php", "w");
-        fwrite($buffer, "<?php\n namespace Rendi\Rframework\App\Domain;\n class " . ucfirst($name) . "Domain {\n #code...\n }");
+        fwrite($buffer, "<?php\n namespace Rendi\Rframework\Domains;\n class " . ucfirst($name) . "{\n #code...\n }");
         fclose($buffer);
     }
 }

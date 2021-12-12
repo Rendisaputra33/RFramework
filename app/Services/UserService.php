@@ -23,12 +23,15 @@ class UserService
             // fetch user by username
             $user = $this->repository->findByUsername($loginRequest->username);
             // when user not found
-            if (!$user) throw new ValidateException('user not found');
+            if ($user == null)
+                throw new ValidateException('user not found');
             // when password valid return user
-            if (password_verify($loginRequest->password, $user->password)) return $user;
+            if (password_verify($loginRequest->password, $user->password))
+                return $user;
+            // 
             throw new ValidateException('username or password wrong!');
-        } catch (\Exception $e) {
-            var_dump($e);
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
             die();
         }
     }
@@ -42,8 +45,7 @@ class UserService
             return $user;
         } catch (\Exception $e) {
             Database::rollbackTransaction();
-            var_dump($e->getMessage());
-            return false;
+            if ($e instanceof ValidateException) throw new ValidateException($e->getMessage());
         }
     }
 }

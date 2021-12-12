@@ -36,6 +36,15 @@ if (!function_exists('template')) {
     }
 }
 
+if (!function_exists('redirect')) {
+    function redirect(string $to): void
+    {
+        ob_clean();
+        header_remove();
+        header("Location: $to");
+    }
+}
+
 if (!function_exists('isAuthenticated')) {
     function isAuthenticated(): mixed
     {
