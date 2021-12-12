@@ -22,7 +22,7 @@ class ResponseData
 
         // Set the content type to JSON and charset 
         // (charset can be set to something else)
-        header("Content-type: application/json; charset=utf-8");
+        header("Content-type: application/json; charset=utf-8", true, $this->code);
         echo json_encode($data);
     }
 }

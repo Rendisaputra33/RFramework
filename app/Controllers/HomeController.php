@@ -4,7 +4,6 @@ namespace Rendi\Rframework\Controllers;
 
 use Rendi\Rframework\App\Core\Database\Query;
 use Rendi\Rframework\App\Core\Http\Request;
-use Rendi\Rframework\App\Views\View as ViewsView;
 
 class HomeController extends Query
 {

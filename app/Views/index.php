@@ -28,7 +28,7 @@
 
     <ul>
         <?php foreach ($users as $key => $value) : ?>
-            <li><?= $key ?> | <?= 'Nama : ' . $value->username . ' Password : ' . $value->password ?></li>
+            <li><?= $key + 1 ?> | <?= 'Nama : ' . $value->username . ' Password : ' . $value->password ?></li>
         <?php endforeach ?>
     </ul>
 

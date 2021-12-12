@@ -2,9 +2,6 @@
 
 namespace Rendi\Rframework\App\Core\Database;
 
-use Exception;
-use PDOException;
-
 use Rendi\Rframework\App\Core\Database\Config;
 
 class Database extends Config
@@ -26,25 +23,27 @@ class Database extends Config
                     $config->password,
                     $options
                 );
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 self::envException($e);
             }
         }
         return self::$dbConnect;
     }
     // connection error handler
-    private static function envException(PDOException $e)
+    private static function envException(\PDOException $e)
     {
         if ($_ENV['APP_ENV'] === 'development') {
             echo $e->getMessage();
             exit();
         } else {
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
             exit();
         }
     }
-    // 
-    public function setBinding(string $key, mixed $value, $type = null): array
+    /**
+     * set binding 
+     */
+    public function setBinding(string $key, mixed $value, $type = null): ?array
     {
         if (is_null($type)) {
             switch (true) {
@@ -61,6 +60,42 @@ class Database extends Config
                     $type = \PDO::PARAM_STR;
                     return ['t' => $type, 'v' => $value, 'k' => $key];
             }
+        }
+        return null;
+    }
+    /**
+     * 
+     */
+    public static function beginTransaction(): void
+    {
+        try {
+            self::$dbConnect->beginTransaction();
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
+        }
+    }
+
+    /**
+     * rollback transaction
+     */
+    public static function rollbackTransaction(): void
+    {
+        try {
+            self::$dbConnect->rollBack();
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
+        }
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public static function commitTransaction(): void
+    {
+        try {
+            self::$dbConnect->commit();
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
         }
     }
 }

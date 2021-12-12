@@ -10,7 +10,7 @@ interface QueryInterface
     public function bind(string $key, $value, $type): Query;
     public function execQuery(): Query;
     public function getSingle(): mixed;
-    public function getAll(): array;
+    public function getAll(): ?array;
 }
 
 class Query extends Database implements QueryInterface
@@ -49,7 +49,7 @@ class Query extends Database implements QueryInterface
     }
 
     // get all data as array
-    public function getAll(): array
+    public function getAll(): ?array
     {
         return $this->steatment->fetchAll(\PDO::FETCH_OBJ);
     }
