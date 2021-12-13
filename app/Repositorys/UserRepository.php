@@ -2,13 +2,21 @@
 
 namespace Rendi\Rframework\Repositorys;
 
-use Rendi\Rframework\App\Core\Database\Query;
 use Rendi\Rframework\Domains\UserDomain;
 use Rendi\Rframework\Exceptions\ValidateException;
 use Rendi\Rframework\Models\UserRegisterRequest;
+use Rendi\Rframework\App\Core\Database\Eloquent;
 
-class UserRepository extends Query
+class UserRepository extends Eloquent
 {
+
+    protected $table_used = "user";
+
+    public function __construct()
+    {
+        parent::__construct($this->table);
+    }
+
     public function findByUsername(string $username): ?UserDomain
     {
         try {

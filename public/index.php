@@ -1,11 +1,7 @@
 <?php
-
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$env = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-
-$env->load();
+\Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
 
 use Rendi\Rframework\App\Core\Database\Database;
 
