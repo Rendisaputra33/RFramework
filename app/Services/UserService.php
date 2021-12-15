@@ -3,6 +3,7 @@
 namespace Rendi\Rframework\Services;
 
 use Rendi\Rframework\App\Core\Database\Database;
+use Rendi\Rframework\Domains\UserDomain;
 use Rendi\Rframework\Exceptions\ValidateException;
 use Rendi\Rframework\Models\UserLoginRequest;
 use Rendi\Rframework\Models\UserRegisterRequest;
@@ -17,7 +18,7 @@ class UserService
         $this->repository = new UserRepository();
     }
 
-    public function login(UserLoginRequest $loginRequest)
+    public function login(UserLoginRequest $loginRequest): UserDomain
     {
         try {
             // fetch user by username
@@ -47,5 +48,10 @@ class UserService
             Database::rollbackTransaction();
             if ($e instanceof ValidateException) throw new ValidateException($e->getMessage());
         }
+    }
+
+    public function creating()
+    {
+        $this->repository->create();
     }
 }

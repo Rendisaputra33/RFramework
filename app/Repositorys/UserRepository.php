@@ -10,18 +10,23 @@ use Rendi\Rframework\App\Core\Database\Eloquent;
 class UserRepository extends Eloquent
 {
 
-    protected $table_used = "user";
+    protected string $table_used = "user";
+    protected array $fieldable = ['username', 'password'];
 
     public function __construct()
     {
-        parent::__construct($this->table);
+        parent::__construct($this->table_used, $this->fieldable);
+    }
+
+    public function create()
+    {
+        $this->insert(['rendi', '12345678']);
     }
 
     public function findByUsername(string $username): ?UserDomain
     {
         try {
-            $query = $this->query("SELECT * FROM user WHERE username = :username");
-            $data = $query->bind(':username', $username)->execQuery()->getSingle();
+            $data = $this->select()->where('username', '=', $username)->first();
             if ($data) {
                 $user = new UserDomain($data);
                 return $user;
@@ -35,8 +40,7 @@ class UserRepository extends Eloquent
     public function save(UserRegisterRequest $request): bool
     {
         try {
-            $query = $this->query("INSERT INTO user (username, password) VALUES (:nama, :pw)");
-            $query->bind(':nama', $request->username)->bind(':pw', $request->hpassword)->execQuery();
+            $this->insert([$request->username, $request->password]);
             return true;
         } catch (\PDOException $exc) {
             if ($exc->getCode() == '23000') {

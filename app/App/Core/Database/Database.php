@@ -72,6 +72,7 @@ class Database extends Config
             self::$dbConnect->beginTransaction();
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
+            die();
         }
     }
 
@@ -84,6 +85,7 @@ class Database extends Config
             self::$dbConnect->rollBack();
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
+            die();
         }
     }
 
@@ -96,6 +98,7 @@ class Database extends Config
             self::$dbConnect->commit();
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
+            die();
         }
     }
 }

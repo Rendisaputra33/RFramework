@@ -27,7 +27,12 @@ class UserController
     {
         return template('Login/index', ['title' => 'Login | Page']);
     }
-
+    // 
+    public function test()
+    {
+        $this->userService->creating();
+    }
+    // 
     public function submitRegister(Request $request)
     {
         try {

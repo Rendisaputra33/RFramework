@@ -17,3 +17,5 @@ Router::post('/user/register', [UserController::class, 'submitRegister']);
 # route login
 Router::get('/user/login', [UserController::class, 'login']);
 Router::post('/user/login', [UserController::class, 'submitLogin']);
+
+Router::get('/test/app/service', [UserController::class, 'test']);
