@@ -2,8 +2,6 @@
 
 namespace Rendi\Rframework\App\Views;
 
-use Exception;
-
 class View
 {
     public static function render(string $name, array $data)
@@ -11,7 +9,7 @@ class View
         extract($data, EXTR_SKIP);
 
         if ($_ENV['APP_ENV'] === 'production') {
-            throw new Exception('view error');
+            throw new \Exception('view error');
             exit();
         } else {
             if (file_exists(__DIR__ . '/../../Views/' . $name . '.php')) {
